@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -40,5 +42,41 @@ public class BoardController {
         model.addAttribute("board", board);
         // 4. forward/redirect
         return "get";
+    }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("board", service.getBoard(id));
+        return "update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateProcess(Board board, RedirectAttributes rttr) {
+
+        boolean ok = service.update(board);
+
+        if (ok) {
+            // 해당 게시물 보기로 리디렉션
+            rttr.addAttribute("success", "success");
+            return "redirect:/id/" + board.getId();
+        } else {
+            // 수정 form으로 리디렉션
+            rttr.addAttribute("fail", "fail");
+            return "redirect:/update/" + board.getId();
+        }
+
+    }
+
+    @PostMapping("/remove")
+    public String remove(Integer id, RedirectAttributes rttr) {
+        boolean ok = service.remove(id);
+
+        if(ok) {
+            rttr.addAttribute("success", "remove");
+            return "redirect:/list";
+        } else {
+            rttr.addAttribute("fail", "fail");
+            return "redirect:/id/" + id;
+        }
     }
 }
