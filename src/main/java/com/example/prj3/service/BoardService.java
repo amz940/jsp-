@@ -36,4 +36,10 @@ public class BoardService {
 
         return cnt == 1;
     }
+
+    public boolean addBoard(Board board) {
+        int cnt = mapper.insert(board);
+
+        return cnt == 1;
+    }
 }

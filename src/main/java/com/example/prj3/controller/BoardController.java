@@ -21,6 +21,28 @@ public class BoardController {
 
     @Autowired
     private BoardService service;
+
+    // 게시물 작성 form ( view) 포워드
+    @GetMapping("add")
+    public void addForm(Board board) {
+
+    }
+
+    // 새 게시물 db에 추가
+    @PostMapping("add")
+    public String addProcess(Board board, RedirectAttributes rttr) {
+        // 1.
+        // 2.
+        boolean ok = service.addBoard(board);
+        // 3.
+        if (ok) {
+            return "redirect:/id/" + board.getId();
+        } else  {
+            rttr.addFlashAttribute("board", board);
+            return "redirect:/add";
+        }
+    }
+
     // 게시물 목록
     @GetMapping("list")
     public String list(Model model) {
@@ -33,6 +55,7 @@ public class BoardController {
         return "list";
     }
 
+    // 게시글 불러오기
     @GetMapping("/id/{id}")
     public String board(@PathVariable("id") Integer id, Model model) {
         // 1. request param
@@ -44,12 +67,16 @@ public class BoardController {
         return "get";
     }
 
+    // 게시글 수정
+    // jsp 화면 이동용 으로 사용
     @GetMapping("/update/{id}")
     public String update(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("board", service.getBoard(id));
         return "update";
     }
 
+    // 게시글 수정하기
+    // db에서 데이터 처리용
     @PostMapping("/update/{id}")
     public String updateProcess(Board board, RedirectAttributes rttr) {
 
@@ -67,6 +94,7 @@ public class BoardController {
 
     }
 
+    // 게시글 삭제하기
     @PostMapping("/remove")
     public String remove(Integer id, RedirectAttributes rttr) {
         boolean ok = service.remove(id);

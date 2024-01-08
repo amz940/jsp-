@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <title>Title</title>
@@ -14,6 +15,9 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
+
+<my:navBar />
+
 <div class="container-lg">
     <h1>${board.id}번 게시물 보기</h1>
     <div>제목 : ${board.title}</div>
@@ -44,7 +48,8 @@
 
       const res = confirm("삭제 하시겠습니까?");
       if (res) {
-        ${"#removeForm"}.submit();
+        // jquery엔 중괄호 대신 소괄호를 사용한다
+        $("#removeForm").submit();
       }
     });
 </script>
