@@ -9,8 +9,14 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
     @Select("""
-            SELECT id, title, body, writer, inserted FROM board
+            SELECT * FROM board
             ORDER BY id DESC;
             """)
     List<Board> selectAll();
+
+    @Select("""
+            SELECT * FROM board
+            WHERE id = #{id}
+            """)
+    Board selectById(Integer id);
 }
