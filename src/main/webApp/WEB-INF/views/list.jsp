@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
@@ -18,7 +18,8 @@
 </head>
 <body>
 
-<my:navBar />
+<my:navBar current="list"/>
+<my:alert/>
 
 <div class="container-lg">
     <h1>게시물 목록 보기</h1>
@@ -52,10 +53,5 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 
-<c:if test="${param.success eq 'remove'}">
-    <script>
-      alert("게시물이 삭제가 되었습니다.")
-    </script>
-</c:if>
 </body>
 </html>

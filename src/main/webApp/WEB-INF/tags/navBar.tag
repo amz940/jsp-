@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ attribute name="current" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ tag language="java" pageEncoding="UTF-8" %>
 
 <nav class="navbar navbar-expand-lg bg-dark mb-5" data-bs-theme="dark">

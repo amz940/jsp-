@@ -17,30 +17,37 @@
 </head>
 <body>
 
-<my:navBar />
+<my:navBar current="add"/>
+<div class="container-lg">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h1>게시물 작성</h1>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="titleInput" class="form-label">제목</label>
+                    <input id="titleInput" class="form-control" type="text" name="title" value="${board.title}"/>
+                </div>
+                <div class="mb-3">
+                    <label for="bodyTextarea" class="form-label">본문</label>
+                    <textarea id="bodyTextarea" class="form-control" name="body">${board.body}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="writerInput" class="form-label">작성자</label>
+                    <input id="writerInput" class="form-control" type="text" name="writer" value="${board.writer}"/>
+                </div>
+                <div class="mb-3">
+                    <input class="btn btn-primary" type="submit" value="등록"/>
+                </div>
+            </form>
 
-<h1>게시물 작성</h1>
-<form method="post">
-    <div>
-        제목 : <input type="text" name="title" value="${board.title}"/>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+                    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        </div>
     </div>
-    <div>
-        본문 : <textarea name="body">${board.body}</textarea>
-    </div>
-    <div>
-        작성자 : <input type="text" name="writer" value="${board.writer}"/>
-    </div>
-    <div>
-        <input type="submit" value="등록" />
-    </div>
-</form>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+</div>
 </body>
 </html>
