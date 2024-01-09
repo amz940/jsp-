@@ -15,12 +15,6 @@ public class BoardService {
     @Autowired
     private BoardMapper mapper;
 
-    public List<Board> listBoard(){
-        List<Board> list = mapper.selectAll();
-
-        return list;
-    }
-
     public Board getBoard(Integer id) {
         return mapper.selectById(id);
     }
@@ -41,5 +35,12 @@ public class BoardService {
         int cnt = mapper.insert(board);
 
         return cnt == 1;
+    }
+
+    public List<Board> listBoard(Integer page) {
+        Integer startIndex = (page - 1) * 10;
+        // 게시물 정보
+        return mapper.selectAllPaging(startIndex);
+        // 페이징
     }
 }

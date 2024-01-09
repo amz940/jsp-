@@ -42,7 +42,9 @@
             </div>
             <div class="mb-3">
                 <a class="btn btn-secondary" href="/update/${board.id}">수정하기</a>
-                <button id="removeButton" class="btn btn-danger" form="removeForm" type="submit">삭제하기</button>
+                <button id="removeButton" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteConfirmModal">삭제하기
+                </button>
             </div>
         </div>
 
@@ -55,25 +57,31 @@
     </form>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제 하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-danger">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script>
-  $("#removeButton").click(function (e) {
-    // 서브밋 진행 이벤트 막기
-    e.preventDefault();
-
-    const res = confirm("삭제 하시겠습니까?");
-    if (res) {
-      // jquery엔 중괄호 대신 소괄호를 사용한다
-      $("#removeForm").submit();
-    }
-  });
-</script>
 
 </body>
 </html>
