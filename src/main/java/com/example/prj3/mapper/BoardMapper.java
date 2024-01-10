@@ -50,15 +50,22 @@ public interface BoardMapper {
             <bind name="pattern" value = "'%' + search + '%'" />
             SELECT id, title, board.writer, board.inserted
             FROM board
-            WHERE
-                title LIKE #{pattern}
-                OR body LIKE #{pattern}
-                OR writer LIKE #{pattern}
+            <where>
+                <if test="category eq 'all' or category eq 'title'">
+                    title LIKE #{pattern}
+                </if>
+                <if test="category eq 'all' or category eq 'body'">
+                    OR body LIKE #{pattern}
+                </if>
+                <if test="category eq 'all' or category eq 'writer'">
+                    OR writer LIKE #{pattern}
+                </if>
+            </where>
             ORDER BY id DESC
             LIMIT #{startIndex}, #{rowPerPage}
             </script>
             """)
-    List<Board> selectAllPaging(Integer startIndex, int rowPerPage, String search);
+    List<Board> selectAllPaging(Integer startIndex, int rowPerPage, String search, String category);
 
     @Select("""
             <script>

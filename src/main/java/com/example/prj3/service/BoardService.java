@@ -39,7 +39,7 @@ public class BoardService {
         return cnt == 1;
     }
 
-    public Map<String, Object> listBoard(Integer page, String search) {
+    public Map<String, Object> listBoard(Integer page, String search, String category) {
         // 페이지당 레코드의 수
         int rowPerPage = 15;
 
@@ -69,7 +69,7 @@ public class BoardService {
         pageInfo.put("firstPageNum", firstPageNum);
 
         // 게시물 정보
-        List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage, search);
+        List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage, search, category);
 
         return Map.of("pageInfo", pageInfo, "boardList", list);
     }

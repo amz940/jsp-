@@ -22,6 +22,10 @@
                 </li>
             </ul>
             <form action="/list" class="d-flex mb-2 mb-lg-0" role="search">
+                <select name="category" id="" >
+                    <option value="all">전체</option>
+                    <option value="title">제목</option>
+                </select>
                 <input value="${param.search}" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
