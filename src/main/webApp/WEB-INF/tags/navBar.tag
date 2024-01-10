@@ -5,7 +5,9 @@
 
 <nav class="navbar navbar-expand-lg bg-dark mb-5" data-bs-theme="dark">
     <div class="container-lg">
-        <a class="navbar-brand" href="/list">jsp연습 게시판</a>
+        <a class="navbar-brand" href="/list">
+            <img src="/img/jsp.png" height="60px" alt="" />
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -19,7 +21,7 @@
                     <a class="nav-link" href="/add">글 작성</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
+            <form class="d-flex mb-2 mb-lg-0" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>

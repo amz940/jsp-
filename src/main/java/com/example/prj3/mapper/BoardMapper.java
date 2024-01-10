@@ -49,7 +49,14 @@ public interface BoardMapper {
             SELECT id, title, board.writer, board.inserted
             FROM board
             ORDER BY id DESC
-            LIMIT #{startIndex}, 10
+            LIMIT #{startIndex}, #{rowPerPage}
             """)
-    List<Board> selectAllPaging(Integer startIndex);
+    List<Board> selectAllPaging(Integer startIndex, int rowPerPage);
+
+    @Select("""
+            SELECT COUNT(*)
+            FROM board;
+            """)
+    Integer countAll();
+
 }
