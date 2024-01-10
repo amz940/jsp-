@@ -39,14 +39,14 @@ public class BoardService {
         return cnt == 1;
     }
 
-    public Map<String, Object> listBoard(Integer page) {
+    public Map<String, Object> listBoard(Integer page, String search) {
         // 페이지당 레코드의 수
         int rowPerPage = 15;
 
         Integer startIndex = (page - 1) * rowPerPage;
         // 페이징
         // 전체 레코드 수
-        Integer numOfRecord = mapper.countAll();
+        Integer numOfRecord = mapper.countAll(search);
         // 마지막 페이지 번호
         int lastPageNum = (numOfRecord - 1) / rowPerPage + 1;
         int firstPageNum = 1;
@@ -69,7 +69,7 @@ public class BoardService {
         pageInfo.put("firstPageNum", firstPageNum);
 
         // 게시물 정보
-        List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage);
+        List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage, search);
 
         return Map.of("pageInfo", pageInfo, "boardList", list);
     }

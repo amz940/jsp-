@@ -45,11 +45,12 @@ public class BoardController {
 
     // 게시물 목록
     @GetMapping("list")
-    public String list(Model model, @RequestParam(value = "page" ,defaultValue = "1") Integer page) {
+    public String list(Model model, @RequestParam(value = "page" ,defaultValue = "1") Integer page,
+                       @RequestParam(value = "search", defaultValue = "")String search) {
         // 1. request param  수집/가공
         // 2. business logic 처리
 //        List<Board> list = service.listBoard();
-        Map<String, Object> result = service.listBoard(page);
+        Map<String, Object> result = service.listBoard(page, search);
         // 3. add attribute
         // 각 각 개별적으로 받아서 model에 담는다
 //        model.addAttribute("boardList", result.get("boardList"));

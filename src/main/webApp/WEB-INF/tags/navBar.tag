@@ -21,8 +21,8 @@
                     <a class="nav-link" href="/add">글 작성</a>
                 </li>
             </ul>
-            <form class="d-flex mb-2 mb-lg-0" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="/list" class="d-flex mb-2 mb-lg-0" role="search">
+                <input value="${param.search}" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>

@@ -46,17 +46,32 @@ public interface BoardMapper {
     Integer insert(Board board);
 
     @Select("""
+            <script>
+            <bind name="pattern" value = "'%' + search + '%'" />
             SELECT id, title, board.writer, board.inserted
             FROM board
+            WHERE
+                title LIKE #{pattern}
+                OR body LIKE #{pattern}
+                OR writer LIKE #{pattern}
             ORDER BY id DESC
             LIMIT #{startIndex}, #{rowPerPage}
+            </script>
             """)
-    List<Board> selectAllPaging(Integer startIndex, int rowPerPage);
+    List<Board> selectAllPaging(Integer startIndex, int rowPerPage, String search);
 
     @Select("""
+            <script>
+            <bind name="pattern" value = "'%' + search + '%'" />
             SELECT COUNT(*)
-            FROM board;
+            FROM board
+            WHERE
+                title LIKE #{pattern}
+                OR body LIKE #{pattern}
+                OR writer LIKE #{pattern}
+            ORDER BY id DESC
+            </script>
             """)
-    Integer countAll();
+    Integer countAll(String search);
 
 }
