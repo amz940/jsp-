@@ -26,13 +26,62 @@ public class BoardService {
         return mapper.selectById(id);
     }
 
-    public boolean update(Board board) {
+    public boolean update(Board board, MultipartFile[] files, List<String> removeFiles) throws IOException {
+        // boardFile 삭제
+        if (removeFiles != null && !removeFiles.isEmpty()) {
+            for (String fileName : removeFiles) {
+                // 하드 디스크에서 삭제
+                String path = "C:" + board.getId() + "\\" + fileName;
+                // 테이블에서 삭제
+                mapper.deleteBoardFileByBoardIdAndFileName(board.getId(), fileName);
+            }
+        }
+
+        // 새 파일 추가
+        for (MultipartFile file : files) {
+            if (file.getSize() > 0) {
+                // 테이블에 파일명 추가
+                mapper.insertFile(board.getId(), file.getOriginalFilename());
+
+                String fileName = file.getOriginalFilename();
+                String folder = "C:\\study\\upload\\" + board.getId();
+                String path = folder + "\\" + fileName;
+
+                // 디렉토리 없으면 만들기
+                File dir = new File(folder);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                // 파일을 하드디스크에 저장
+                File file1 = new File(path);
+                file.transferTo(file1);
+            }
+        }
+
+        // 게시물 테이블 수정
         int cnt = mapper.update(board);
 
         return cnt == 1;
     }
 
     public boolean remove(Integer id) {
+        // 파일명 조회
+        List<String> fileNames = mapper.selectBoardFileByBoardId(id);
+
+        // 파일 삭제
+        mapper.deleteBoardFileByBoardId(id);
+
+        // 하드 디스크의 파일 지우기
+        for (String fileName : fileNames) {
+            String path = "C:\\study\\upload\\" + id + "\\" + fileName;
+            File file = new File(path);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+
+        // 게시물 테이블 삭제
         int cnt = mapper.remove(id);
 
         return cnt == 1;

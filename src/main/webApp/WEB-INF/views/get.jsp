@@ -35,7 +35,8 @@
             <div class="mb-3">
                 <c:forEach items="${board.fileName}" var="fileName">
                     <div class="mb-3">
-                        <img class="img-thumbnail img-fluid" src="http://localhost:8080/image/${board.id}/${fileName}" alt="" />
+                        <c:set var="bucketUrl" value="https://amz940.s3.ap-northeast-2.amazonaws.com/board" />
+                        <img class="img-thumbnail img-fluid" src="${bucketUrl}/${board.id}/${fileName}" alt="" />
                     </div>
                 </c:forEach>
             </div>
@@ -77,7 +78,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-danger">삭제</button>
+                <button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
             </div>
         </div>
     </div>

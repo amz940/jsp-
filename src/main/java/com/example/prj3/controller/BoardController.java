@@ -89,9 +89,10 @@ public class BoardController {
     // 게시글 수정하기
     // db에서 데이터 처리용
     @PostMapping("/update/{id}")
-    public String updateProcess(Board board, RedirectAttributes rttr) {
-
-        boolean ok = service.update(board);
+    public String updateProcess(Board board, RedirectAttributes rttr,
+                                @RequestParam(value = "files", required = false) MultipartFile[] files,
+                                @RequestParam(value = "removeFiles", required = false) List<String> removeFiles) throws IOException {
+        boolean ok = service.update(board, files, removeFiles);
 
         if (ok) {
             // 해당 게시물 보기로 리디렉션

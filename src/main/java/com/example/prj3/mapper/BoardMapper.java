@@ -101,4 +101,23 @@ public interface BoardMapper {
             """)
     Integer insertFile(Integer boardId, String fileName);
 
+    @Select("""
+            SELECT fileName
+            FROM boardfile
+            WHERE boardId = #{boardId}
+            """)
+    List<String> selectBoardFileByBoardId(Integer id);
+
+    @Delete("""
+            DELETE FROM boardfile
+            WHERE boardId = #{boardId}
+            """)
+    void deleteBoardFileByBoardId(Integer boardId);
+
+    @Delete("""
+            DELETE FROM boardfile
+            WHERE boardId = #{boardId}
+                AND fileName = #{fileName}
+            """)
+    void deleteBoardFileByBoardIdAndFileName(Integer boardId, String fileName);
 }

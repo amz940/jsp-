@@ -14,17 +14,23 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .form-check-input:checked {
+            background-color: red;
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
 
-<my:navBar />
-<my:alert />
+<my:navBar/>
+<my:alert/>
 
 <div class="container-lg">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
             <h1>${board.id}번 게시물 수정</h1>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="${board.id}" readonly/>
                 <div class="mb-3">
                     <label for="titleInput" class="form-label">제목</label>
@@ -35,8 +41,27 @@
                     <textarea id="bodyTextarea" class="form-control" name="body">${board.body}</textarea>
                 </div>
                 <div class="mb-3">
+                    <%--                    반복문 사용할 시 같은 이름을 가진 메소드가 있으면 안되기 때문에 status를 사용하여 랜덤값 부여--%>
+                    <c:forEach items="${board.fileName}" var="fileName" varStatus="status">
+                        <div class="form-check form-switch">
+                            <input name="removeFiles" value="${fileName}" class="form-check-input" type="checkbox"
+                                   role="switch" id="removeCheckBox${status.index}" checked>
+                            <label class="form-check-label" for="removeCheckBox${status.index}">삭제</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <img class="img-thumbnail img-fluid"
+                                 src="http://localhost:8080/image/${board.id}/${fileName}" alt=""/>
+                        </div>
+                    </c:forEach>
+                </div>
+                <div class="mb-3">
                     <label for="writerInput" class="form-label">작성자</label>
                     <input id="writerInput" class="form-control" type="text" name="writer" value="${board.writer}"/>
+                </div>
+                <div class="mb-3">
+                    <label for="fileInput" class="form-label">그림 파일</label>
+                    <input class="form-control" type="file" id="fileInput" name="files" accept="image/*" multiple>
                 </div>
                 <div class="mb-3">
                     <input class="btn btn-primary" type="submit" value="수정"/>
