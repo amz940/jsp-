@@ -14,9 +14,13 @@ public interface BoardMapper {
     List<Board> selectAll();
 
     @Select("""
-            SELECT * FROM board
-            WHERE id = #{id}
+            SELECT b.id, b.title, b.body, b.writer, b.inserted, bf.fileName
+            FROM board b
+                LEFT JOIN board.boardfile bf
+                    on b.id = bf.boardId
+            WHERE b.id = #{id}
             """)
+    @ResultMap("boardResultMap")
     Board selectById(Integer id);
 
     @Update("""
@@ -48,7 +52,32 @@ public interface BoardMapper {
     @Select("""
             <script>
             <bind name="pattern" value = "'%' + search + '%'" />
-            SELECT id, title, board.writer, board.inserted
+            SELECT b.id, b.title, b.writer, b.inserted, COUNT(bf.id) `fileCount`
+            FROM board b
+                LEFT JOIN boardfile bf
+                    ON b.id = bf.boardId
+            <where>
+                <if test="category eq 'all' or category eq 'title'">
+                    title LIKE #{pattern}
+                </if>
+                <if test="category eq 'all' or category eq 'body'">
+                    OR body LIKE #{pattern}
+                </if>
+                <if test="category eq 'all' or category eq 'writer'">
+                    OR writer LIKE #{pattern}
+                </if>
+            </where>
+            GROUP BY b.id
+            ORDER BY b.id DESC
+            LIMIT #{startIndex}, #{rowPerPage}
+            </script>
+            """)
+    List<Board> selectAllPaging(Integer startIndex, int rowPerPage, String search, String category);
+
+    @Select("""
+            <script>
+            <bind name="pattern" value = "'%' + search + '%'" />
+            SELECT COUNT(*)
             FROM board
             <where>
                 <if test="category eq 'all' or category eq 'title'">
@@ -62,23 +91,14 @@ public interface BoardMapper {
                 </if>
             </where>
             ORDER BY id DESC
-            LIMIT #{startIndex}, #{rowPerPage}
             </script>
             """)
-    List<Board> selectAllPaging(Integer startIndex, int rowPerPage, String search, String category);
+    Integer countAll(String search, String category);
 
-    @Select("""
-            <script>
-            <bind name="pattern" value = "'%' + search + '%'" />
-            SELECT COUNT(*)
-            FROM board
-            WHERE
-                title LIKE #{pattern}
-                OR body LIKE #{pattern}
-                OR writer LIKE #{pattern}
-            ORDER BY id DESC
-            </script>
+    @Insert("""
+            INSERT INTO boardfile (boardId, fileName)
+            VALUES (#{boardId}, #{fileName})
             """)
-    Integer countAll(String search);
+    Integer insertFile(Integer boardId, String fileName);
 
 }

@@ -44,6 +44,7 @@
                     <a href="/id/${board.id}">
                             ${board.title}
                     </a>
+                    <span class="badge text-bg-light">${board.fileCount}</span>
                 </td>
                 <td>${board.writer}</td>
                 <td>${board.inserted}</td>
@@ -57,61 +58,35 @@
     <div class="row ">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
+                <%--                맨 처음 버튼--%>
                 <c:if test="${pageInfo.currentPageNum gt 1}">
-                    <c:url value="/list" var="pageLink">
-                        <c:param name="page" value="${pageInfo.firstPageNum}"/>
-                        <c:param name="search" value="${param.search}"/>
-                    </c:url>
-                    <li class="page-item">
-                        <a class="page-link" href="${pageLink}">처음</a>
-                    </li>
+                    <my:pageItem pageNumber="${pageInfo.firstPageNum}">
+                        처음
+                    </my:pageItem>
                 </c:if>
                 <%--                이전 버튼--%>
-                <c:url value="/list" var="pageLink">
-                    <c:param name="page" value="${pageInfo.currentPageNum - 1}"/>
-                    <c:param name="search" value="${param.search}"/>
-                </c:url>
                 <c:if test="${pageInfo.currentPageNum gt 1}">
-                    <li class="page-item">
-                        <a class="page-link" href="${pageLink}">
-                            이전
-                        </a>
-                    </li>
+                    <my:pageItem pageNumber="${pageInfo.currentPageNum - 1}">
+                        이전
+                    </my:pageItem>
                 </c:if>
                 <%--                    버튼 목록--%>
                 <c:forEach begin="${pageInfo.leftPageNum}" end="${pageInfo.rightPageNum}" var="pageNumber">
-                    <c:url value="/list" var="pageLink">
-                        <c:param name="page" value="${pageNumber}"/>
-                        <c:if test="${not empty param.search}">
-                            <c:param name="search" value="${param.search}"/>
-                        </c:if>
-                    </c:url>
-                    <%--                    현재 버튼--%>
-                    <li class="page-item">
-                        <a class="page-link ${pageNumber eq pageInfo.currentPageNum ? 'active' : ''}"
-                           href="${pageLink}">${pageNumber}</a>
-                    </li>
+                    <my:pageItem pageNumber="${pageNumber}">
+                        ${pageNumber}
+                    </my:pageItem>
                 </c:forEach>
                 <%--                다음 버튼--%>
                 <c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum}">
-                    <c:url value="/list" var="pageLink">
-                        <c:param name="page" value="${pageInfo.currentPageNum + 1}"/>
-                        <c:param name="search" value="${param.search}"/>
-                    </c:url>
-                    <li class="page-item">
-                        <a class="page-link" href="${pageLink}">
-                            다음
-                        </a>
-                    </li>
+                    <my:pageItem pageNumber="${pageInfo.currentPageNum + 1}">
+                        다음
+                    </my:pageItem>
                 </c:if>
+                <%--                맨 마지막 버튼--%>
                 <c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum}">
-                    <c:url value="/list" var="pageLink">
-                        <c:param name="page" value="${pageInfo.lastPageNum}"/>
-                        <c:param name="search" value="${param.search}"/>
-                    </c:url>
-                    <li class="page-item">
-                        <a class="page-link" href="${pageLink}">맨끝</a>
-                    </li>
+                    <my:pageItem pageNumber="${pageInfo.lastPageNum}">
+                        맨끝
+                    </my:pageItem>
                 </c:if>
             </ul>
         </nav>

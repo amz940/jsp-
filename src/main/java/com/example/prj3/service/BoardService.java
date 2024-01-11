@@ -5,13 +5,18 @@ import com.example.prj3.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackFor = Exception.class)
 public class BoardService {
 
     @Autowired
@@ -33,8 +38,32 @@ public class BoardService {
         return cnt == 1;
     }
 
-    public boolean addBoard(Board board) {
+    public boolean addBoard(Board board, MultipartFile[] files) throws Exception {
+        // 게시물 insert
         int cnt = mapper.insert(board);
+
+        // 강제로 익셉션 발생 시켜 주는 코드
+//        if (true) {
+//            throw new Exception("테스트용");
+//        }
+
+        for (MultipartFile file : files) {
+            if (file.getSize() > 0) {
+            // 파일 저장
+            // 폴더 만들기
+            String folder = "C:\\study\\upload\\" + board.getId();
+            File targetFolder = new File(folder);
+            if (!targetFolder.exists()){
+                targetFolder.mkdirs();
+            }
+
+            String path = folder + "\\" + file.getOriginalFilename();
+            File target = new File(path);
+            file.transferTo(target);
+            // db에 관련 정보 저장
+            mapper.insertFile(board.getId(), file.getOriginalFilename());
+            }
+        }
 
         return cnt == 1;
     }
@@ -46,7 +75,7 @@ public class BoardService {
         Integer startIndex = (page - 1) * rowPerPage;
         // 페이징
         // 전체 레코드 수
-        Integer numOfRecord = mapper.countAll(search);
+        Integer numOfRecord = mapper.countAll(search, category);
         // 마지막 페이지 번호
         int lastPageNum = (numOfRecord - 1) / rowPerPage + 1;
         int firstPageNum = 1;

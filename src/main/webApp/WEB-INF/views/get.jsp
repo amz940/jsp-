@@ -33,6 +33,13 @@
                 <input type="text" class="form-control" value="${board.body}" readonly/>
             </div>
             <div class="mb-3">
+                <c:forEach items="${board.fileName}" var="fileName">
+                    <div class="mb-3">
+                        <img class="img-thumbnail img-fluid" src="http://localhost:8080/image/${board.id}/${fileName}" alt="" />
+                    </div>
+                </c:forEach>
+            </div>
+            <div class="mb-3">
                 <label for="" class="form-label">작성자</label>
                 <input type="text" class="form-control" value="${board.writer}" readonly/>
             </div>
