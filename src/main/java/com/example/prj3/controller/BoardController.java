@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
 import java.util.List;
@@ -76,6 +79,22 @@ public class BoardController {
         model.addAttribute("board", board);
         // 4. forward/redirect
         return "get";
+    }
+
+    @GetMapping("link1")
+    public void method1(){
+
+        Region region = Region.AP_NORTHEAST_2;
+        String bucketName = "amz940";
+
+        S3Client s3 = S3Client.builder()
+                .region(region)
+                .build();
+
+//        PutObjectRequest objectRequest = PutObjectRequest.builder()
+//                .bucket(bucketName)
+//                .key()
+//                .build();
     }
 
     // 게시글 수정
